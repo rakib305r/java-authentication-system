@@ -26,12 +26,35 @@ public class MainGUI extends JFrame {
     private void initializeUI() {
         setTitle("Authentication System");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 450);
+        setSize(550, 500);
         setLocationRelativeTo(null);
         setResizable(false);
         
-        cardLayout = new CardLayout();
-        mainPanel = new JPanel(cardLayout);
+        // Set modern look and feel
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        // Create gradient background panel
+        mainPanel = new JPanel(new CardLayout()) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+                int w = getWidth();
+                int h = getHeight();
+                Color color1 = new Color(66, 135, 245);
+                Color color2 = new Color(102, 187, 106);
+                GradientPaint gp = new GradientPaint(0, 0, color1, 0, h, color2);
+                g2d.setPaint(gp);
+                g2d.fillRect(0, 0, w, h);
+            }
+        };
+        cardLayout = (CardLayout) mainPanel.getLayout();
+        mainPanel.setOpaque(false);
         
         // Create panels
         loginPanel = new LoginPanel(this);
@@ -73,12 +96,6 @@ public class MainGUI extends JFrame {
     
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            try {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            
             MainGUI gui = new MainGUI();
             gui.setVisible(true);
         });

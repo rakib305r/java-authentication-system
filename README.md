@@ -1180,3 +1180,9 @@ Bangladesh
 **Built with ❤️ using Core Java**
 
 </div>
+
+
+Project Run: 
+cd AuthenticationSystem
+javac *.java
+java MainGUI
